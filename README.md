@@ -1,6 +1,6 @@
 # AsyncHTTPClient
 
-This class mediator can be used to invoke a backend service inside the class mediator using java.net.http package (introduced in Java 11). To engage the class mediator you need  to use a custom mediation policy as below and then use the respond mediator. Make sure to change the backend URL as you need.
+This class mediator can be used to invoke a backend service inside the class mediator using java.net.http package (introduced in Java 11). This uses sendAsync(HttpRequest, BodyHandler) method which sends the request and receives the response asynchronously. To engage the class mediator you need  to use a custom mediation policy as below and then use the respond mediator. Make sure to change the backend URL as you need.
 
 <ul>
 <li>connectionTimeout: the time to establish the connection with the remote host</li>
