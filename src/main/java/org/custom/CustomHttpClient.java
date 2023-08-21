@@ -46,7 +46,6 @@ public class CustomHttpClient extends AbstractMediator implements ManagedLifecyc
             org.apache.axis2.context.MessageContext axis2MessageContext = ((Axis2MessageContext) messageContext).getAxis2MessageContext();
             String requestBody = axis2MessageContext.getEnvelope().getBody().getText();
 
-            HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(new URI("https://localhost:7001"))
                     .timeout(Duration.ofSeconds(Long.parseLong(socketTimeout)))
@@ -54,7 +53,7 @@ public class CustomHttpClient extends AbstractMediator implements ManagedLifecyc
                     .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                     .build();
 
-            client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+            httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                     .thenAccept(response -> {
                         int statusCode = response.statusCode();
                         HttpHeaders headers = response.headers();
