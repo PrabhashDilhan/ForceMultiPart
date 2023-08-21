@@ -8,7 +8,8 @@ This class mediator can be used to invoke a backend service inside the class med
 </li>
 </ul>
 
-```<sequence xmlns="http://ws.apache.org/ns/synapse" name="custom_policy">
+```
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="custom_policy">
    <class name="org.custom.CustomHttpClient">
      <property name="connectionTimeout" value="30"/>
      <property name="socketTimeout" value="60"/>
