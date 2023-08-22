@@ -36,6 +36,8 @@ public class CustomHttpClient extends AbstractMediator implements ManagedLifecyc
 
     private String socketTimeout = "60";
 
+    private String backEndUrl = null;
+
     private HttpClient httpClient;
 
     @Override
@@ -43,11 +45,16 @@ public class CustomHttpClient extends AbstractMediator implements ManagedLifecyc
 
         try {
 
+            if(backEndUrl==null){
+                log.error("Back end Url is empty, Please provide the back end url as a class mediator parameter");
+                return true;
+            }
+
             org.apache.axis2.context.MessageContext axis2MessageContext = ((Axis2MessageContext) messageContext).getAxis2MessageContext();
             String requestBody = axis2MessageContext.getEnvelope().getBody().getText();
 
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(new URI("https://localhost:7001"))
+                    .uri(new URI(backEndUrl))
                     .timeout(Duration.ofSeconds(Long.parseLong(socketTimeout)))
                     .header("Content-Type","text/plain")
                     .POST(HttpRequest.BodyPublishers.ofString(requestBody))
@@ -56,14 +63,6 @@ public class CustomHttpClient extends AbstractMediator implements ManagedLifecyc
             httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                     .thenAccept(response -> {
                         int statusCode = response.statusCode();
-                        HttpHeaders headers = response.headers();
-                        String responseBody = response.body();
-
-                        System.out.println("Status Code: " + statusCode);
-                        System.out.println("Headers: " + headers.map());
-                        System.out.println("Body: " + responseBody);
-                        System.out.println(response.body());
-
                         axis2MessageContext.getEnvelope().getBody().getFirstElement().detach();
                         // Define the namespace URI and prefix
                         String namespaceURI = "http://ws.apache.org/commons/ns/payload";
@@ -77,8 +76,6 @@ public class CustomHttpClient extends AbstractMediator implements ManagedLifecyc
                         axis2MessageContext.setProperty("HTTP_SC",statusCode);
                     })
                     .join(); // This will block until the response is available.
-
-
 
         } catch (Exception e) {
             handleException("Exception occured in the CustomHttpClient class mediator", e);
@@ -155,6 +152,13 @@ public class CustomHttpClient extends AbstractMediator implements ManagedLifecyc
 
     public void setSocketTimeout(String socketTimeout) {
         this.socketTimeout = socketTimeout;
+    }
+
+    public String getBackEndUrl() {
+        return backEndUrl;
+    }
+    public void setBackEndUrl(String backEndUrl) {
+        this.backEndUrl = backEndUrl;
     }
 }
 
