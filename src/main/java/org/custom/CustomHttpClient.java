@@ -14,7 +14,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
-import java.net.http.HttpHeaders;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.security.*;
@@ -26,9 +25,7 @@ import org.wso2.carbon.utils.CarbonUtils;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
 
-
 public class CustomHttpClient extends AbstractMediator implements ManagedLifecycle {
-
 
     private static final Log log = LogFactory.getLog(CustomHttpClient.class);
 
@@ -44,12 +41,10 @@ public class CustomHttpClient extends AbstractMediator implements ManagedLifecyc
     public boolean mediate(MessageContext messageContext) {
 
         try {
-
             if(backEndUrl==null){
                 log.error("Back end Url is empty, Please provide the back end url as a class mediator parameter");
                 return true;
             }
-
             org.apache.axis2.context.MessageContext axis2MessageContext = ((Axis2MessageContext) messageContext).getAxis2MessageContext();
             String requestBody = axis2MessageContext.getEnvelope().getBody().getText();
 
@@ -82,7 +77,6 @@ public class CustomHttpClient extends AbstractMediator implements ManagedLifecyc
         }
         return true;
     }
-
     private static SSLContext createSSLContext() {
 
         String keyStorePath = CarbonUtils.getServerConfiguration()
@@ -112,7 +106,6 @@ public class CustomHttpClient extends AbstractMediator implements ManagedLifecyc
         } catch (Exception e){
             handleException("Exception occurred when creating ssl context",e);
         }
-
         return null;
     }
 
@@ -127,29 +120,23 @@ public class CustomHttpClient extends AbstractMediator implements ManagedLifecyc
             handleException("CustomHttpClient class mediator initialisation failed ",e);
         }
     }
-
     @Override
     public void destroy() {
 
     }
-
     public static void handleException(String msg, Throwable t) throws SynapseException {
         log.error(msg,t);
         throw new SynapseException(msg, t);
     }
-
     public String getConnectionTimeout() {
         return connectionTimeout;
     }
-
     public void setConnectionTimeout(String connectionTimeout) {
         this.connectionTimeout = connectionTimeout;
     }
-
     public String getSocketTimeout() {
         return socketTimeout;
     }
-
     public void setSocketTimeout(String socketTimeout) {
         this.socketTimeout = socketTimeout;
     }
