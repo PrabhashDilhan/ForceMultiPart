@@ -46,7 +46,7 @@ public class CustomHttpClient extends AbstractMediator implements ManagedLifecyc
                 return true;
             }
             org.apache.axis2.context.MessageContext axis2MessageContext = ((Axis2MessageContext) messageContext).getAxis2MessageContext();
-            String requestBody = axis2MessageContext.getEnvelope().getBody().getText();
+            String requestBody = axis2MessageContext.getEnvelope().getBody().getFirstElement().getText();
 
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(new URI(backEndUrl))
