@@ -1,4 +1,4 @@
-# AsyncHTTPClient
+# ForceMultiPart
 
 
 This class mediator can be used to convert multipart/form-data requests to multipart/related inside the API. The below mediation sequence should be used to invoke the class mediator and generate the soap message.
