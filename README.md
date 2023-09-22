@@ -2,7 +2,7 @@
 
 
 This class mediator can be used to convert multipart/form-data requests to multipart/related inside the API. The below mediation sequence should be used to invoke the class mediator and generate the soap message.
-If you send the multipart/form-data request as content and the attachment as the file. You can read those into properties. Here we read the file into the ultipart.body.file property and we use that inside the class mediators to generate the multipart-related attachment.
+If you send the multipart/form-data payload as content and the attachment as the file. You can read those into properties. Here we read the file into the multipart.body.file property and we use that inside the class mediators to generate the multipart-related attachment. You can generate the soap message based on your request payload. Here we have used payload factory mediator to generate a sample soap message.
 
 ```
 <sequence xmlns="http://ws.apache.org/ns/synapse" name="custom_policy">
