@@ -17,7 +17,7 @@ If you send the multipart/form-data payload as content and the attachment as the
 
 <payloadFactory description="transform" media-type="xml">
   <format>
-  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://wso2.org/">
       <soapenv:Header/>
       <soapenv:Body>
           <tem:test>
